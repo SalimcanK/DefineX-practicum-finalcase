@@ -1,1 +1,0 @@
-# DefineX-practicum-finalcase
