@@ -1,7 +1,6 @@
 package com.salimcankaya.model;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,7 +40,7 @@ public class Customer {
     private double monthlySalary;
 	
 	@Column(name = "deposit")
-	private double deposit;
+	private double deposit = 0.0;
 	
 	@Transient
     @JsonIgnore
@@ -134,9 +133,8 @@ public class Customer {
 		this.creditScore = creditScore;
 	}
 	
-	// Deposit is optional
-	public Optional<Double> getDeposit() {
-		return Optional.ofNullable(deposit);
+	public double getDeposit() {
+		return deposit;
 			
 		}
 
