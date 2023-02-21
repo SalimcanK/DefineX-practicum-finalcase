@@ -40,7 +40,7 @@ public class Customer {
     private double monthlySalary;
 	
 	@Column(name = "deposit")
-	private double deposit = 0.0;
+	private double deposit;
 	
 	@Transient
     @JsonIgnore
