@@ -31,25 +31,35 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer getCustomerByTckn(Long tckn) {
 		
-		return customerRepo.findByTckn(tckn);
+		return customerRepo.findByTckn(tckn).orElseThrow();
 	}
 
 	@Override
 	public Customer addCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return customerRepo.save(customer);
 	}
 
 	@Override
 	public Customer updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Customer customerFromDatabase = customerRepo.findById(customer.getTckn()).orElseThrow();
+		
+		customerFromDatabase.setTckn(customer.getTckn());
+		customerFromDatabase.setName(customer.getName());
+		customerFromDatabase.setLastName(customer.getLastName());
+		customerFromDatabase.setDateOfBirth(customer.getDateOfBirth());
+		customerFromDatabase.setPhoneNumber(customer.getPhoneNumber());
+		customerFromDatabase.setMonthlySalary(customer.getMonthlySalary());
+		customerFromDatabase.setDeposit(customer.getDeposit());
+		
+		return customerRepo.save(customer);
 	}
 
 	@Override
 	public boolean deleteCustomerByTckn(Long tckn) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return customerRepo.deleteByTckn(tckn);
 	}
 
 }
