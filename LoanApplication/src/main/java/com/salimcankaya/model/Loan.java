@@ -29,14 +29,6 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@Column(name = "loan_amount")
-	private Double loanAmount;
-	
-	@JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "customer_tckn", referencedColumnName = "tckn")
-    private Customer customer;
-	
 	@Column(name = "approval_date")
     @CreationTimestamp
     private LocalDateTime approvalDate;
@@ -44,6 +36,14 @@ public class Loan {
 	@Column(name = "approval_status")
     @NotNull
     private boolean approvalStatus;
+	
+	@Column(name = "loan_amount")
+	private Double loanAmount;
+	
+	@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "customer_tckn", referencedColumnName = "tckn")
+    private Customer customer;
 
 	
 	
