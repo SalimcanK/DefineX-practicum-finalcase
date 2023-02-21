@@ -17,14 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "loan")
 public class Loan {
@@ -50,5 +44,60 @@ public class Loan {
 	@Column(name = "approval_status")
     @NotNull
     private boolean approvalStatus;
+
+	
+	
+	public Loan(Long id, Double loanAmount, Customer customer, LocalDateTime approvalDate,
+			@NotNull boolean approvalStatus) {
+		super();
+		this.id = id;
+		this.loanAmount = loanAmount;
+		this.customer = customer;
+		this.approvalDate = approvalDate;
+		this.approvalStatus = approvalStatus;
+	}
+
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Double getLoanAmount() {
+		return loanAmount;
+	}
+
+	public void setLoanAmount(Double loanAmount) {
+		this.loanAmount = loanAmount;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public LocalDateTime getApprovalDate() {
+		return approvalDate;
+	}
+
+	public void setApprovalDate(LocalDateTime approvalDate) {
+		this.approvalDate = approvalDate;
+	}
+
+	public boolean isApprovalStatus() {
+		return approvalStatus;
+	}
+
+	public void setApprovalStatus(boolean approvalStatus) {
+		this.approvalStatus = approvalStatus;
+	}
+	
 
 }

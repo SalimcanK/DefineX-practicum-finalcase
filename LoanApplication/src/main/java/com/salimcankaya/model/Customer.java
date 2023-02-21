@@ -12,14 +12,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -54,10 +48,100 @@ public class Customer {
     private Integer creditScore;
 
 	
+	
+	public Customer(@Digits(fraction = 0, integer = 11) Long tckn, String name, String lastName, LocalDate dateOfBirth,
+			@Pattern(regexp = "^[0-9]{10}", message = "Phone number needs to be 10 digits and can only contain numbers.") String phoneNumber,
+			double monthlySalary, double deposit, Integer creditScore) {
+		super();
+		this.tckn = tckn;
+		this.name = name;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.phoneNumber = phoneNumber;
+		this.monthlySalary = monthlySalary;
+		this.deposit = deposit;
+		this.creditScore = creditScore;
+	}
+
+	
+	
+	public Long getTckn() {
+		return tckn;
+	}
+
+
+	public void setTckn(Long tckn) {
+		this.tckn = tckn;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+
+	public double getMonthlySalary() {
+		return monthlySalary;
+	}
+
+
+	public void setMonthlySalary(double monthlySalary) {
+		this.monthlySalary = monthlySalary;
+	}
+
+
+	public Integer getCreditScore() {
+		return creditScore;
+	}
+
+
+	public void setCreditScore(Integer creditScore) {
+		this.creditScore = creditScore;
+	}
+	
 	// Deposit is optional
 	public Optional<Double> getDeposit() {
 		return Optional.ofNullable(deposit);
+			
+		}
+
+    public void setDeposit(double deposit) {
+		this.deposit = deposit;
 	}
-	
 
 }
