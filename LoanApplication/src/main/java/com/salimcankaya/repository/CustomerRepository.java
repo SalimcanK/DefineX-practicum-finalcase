@@ -6,5 +6,8 @@ import com.salimcankaya.model.Customer;
 
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+	
+	
+	Customer findByTckn(Long tckn);
 
 }
