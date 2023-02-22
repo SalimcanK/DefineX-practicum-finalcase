@@ -58,6 +58,13 @@ public class Loan {
 		this.approvalDate = approvalDate;
 		this.approvalStatus = approvalStatus;
 	}
+	
+	public Loan(LocalDateTime approvalDate, boolean approvalStatus, Double loanAmount, Customer customer) {
+        this.approvalDate = approvalDate;
+        this.approvalStatus = approvalStatus;
+        this.loanAmount = loanAmount;
+        this.customer = customer;
+    }
 
 	
 	

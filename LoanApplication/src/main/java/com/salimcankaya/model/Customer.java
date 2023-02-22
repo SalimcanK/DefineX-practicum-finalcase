@@ -1,13 +1,16 @@
 package com.salimcankaya.model;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
@@ -41,11 +44,15 @@ public class Customer {
     private double monthlySalary;
 	
 	@Column(name = "deposit")
-	private Optional<Double> deposit;
+	private double deposit;
 	
 	@Transient
     @JsonIgnore
     private Integer creditScore;
+	
+	@Transient
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Loan> loanList;
 
 	
 	
@@ -53,7 +60,7 @@ public class Customer {
 	
 	public Customer(@Digits(fraction = 0, integer = 11) Long tckn, String name, String lastName, LocalDate dateOfBirth,
 			@Pattern(regexp = "^[0-9]{10}", message = "Phone number needs to be 10 digits and can only contain numbers.") String phoneNumber,
-			double monthlySalary, Optional<Double> deposit, Integer creditScore) {
+			double monthlySalary, double deposit, Integer creditScore) {
 		super();
 		this.tckn = tckn;
 		this.name = name;
@@ -136,12 +143,12 @@ public class Customer {
 		this.creditScore = creditScore;
 	}
 	
-	public Optional<Double> getDeposit() {
+	public double getDeposit() {
 		return deposit;
 			
 		}
 
-    public void setDeposit(Optional<Double> deposit) {
+    public void setDeposit(double deposit) {
 		this.deposit = deposit;
 	}
 
