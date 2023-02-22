@@ -49,9 +49,9 @@ INSERT INTO loan (approval_date, approval_status, loan_amount, customer_tckn)
 VALUES ('2022-12-30 23:31:11.167', 'true', 10000, 20000000055);
 
 INSERT INTO loan (approval_date, approval_status, loan_amount, customer_tckn)
-VALUES ('2022-11-30 06:22:01.166', 'true', 15900, 20000000009),
-       ('2021-10-13 10:44:42.163', 'false', 0, 20000000009),
-       ('2021-05-27 09:29:03.162', 'true', 15100, 20000000009);
+VALUES ('2022-11-30 06:22:01.166', 'true', 15900, 20000001009),
+       ('2021-10-13 10:44:42.163', 'false', 0, 20000001009),
+       ('2021-05-27 09:29:03.162', 'true', 15100, 20000001009);
 
 INSERT INTO loan (approval_date, approval_status, loan_amount, customer_tckn)
 VALUES ('2021-10-13 10:44:42.163', 'false', 0, 20000000648),
