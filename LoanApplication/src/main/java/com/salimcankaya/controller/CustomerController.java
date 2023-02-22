@@ -1,6 +1,5 @@
 package com.salimcankaya.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,23 +11,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.salimcankaya.model.Customer;
-import com.salimcankaya.service.CustomerService;
-import com.salimcankaya.service.LoanService;
+import com.salimcankaya.service.implementation.CustomerServiceImpl;
 
 
 @RestController
 public class CustomerController {
 	
 	
-	private final CustomerService customerService;
+	private final CustomerServiceImpl customerService;
 	
-	private final LoanService loanService;
 	
-	@Autowired
-	public CustomerController(CustomerService customerService, LoanService loanService) {
+	public CustomerController(CustomerServiceImpl customerService) {
 		
 		this.customerService = customerService;
-		this.loanService = loanService;
 	}
 	
 	
