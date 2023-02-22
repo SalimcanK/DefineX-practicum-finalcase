@@ -47,6 +47,8 @@ public class Loan {
 
 	
 	
+	public Loan() {}
+	
 	public Loan(Long id, Double loanAmount, Customer customer, LocalDateTime approvalDate,
 			@NotNull boolean approvalStatus) {
 		super();

@@ -1,6 +1,7 @@
 package com.salimcankaya.model;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,7 +41,7 @@ public class Customer {
     private double monthlySalary;
 	
 	@Column(name = "deposit")
-	private double deposit;
+	private Optional<Double> deposit;
 	
 	@Transient
     @JsonIgnore
@@ -48,9 +49,11 @@ public class Customer {
 
 	
 	
+	public Customer() {}
+	
 	public Customer(@Digits(fraction = 0, integer = 11) Long tckn, String name, String lastName, LocalDate dateOfBirth,
 			@Pattern(regexp = "^[0-9]{10}", message = "Phone number needs to be 10 digits and can only contain numbers.") String phoneNumber,
-			double monthlySalary, double deposit, Integer creditScore) {
+			double monthlySalary, Optional<Double> deposit, Integer creditScore) {
 		super();
 		this.tckn = tckn;
 		this.name = name;
@@ -133,12 +136,12 @@ public class Customer {
 		this.creditScore = creditScore;
 	}
 	
-	public double getDeposit() {
+	public Optional<Double> getDeposit() {
 		return deposit;
 			
 		}
 
-    public void setDeposit(double deposit) {
+    public void setDeposit(Optional<Double> deposit) {
 		this.deposit = deposit;
 	}
 
