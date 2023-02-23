@@ -1,5 +1,8 @@
 package com.salimcankaya.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.salimcankaya.model.Customer;
+import com.salimcankaya.model.Loan;
 import com.salimcankaya.service.implementation.CustomerServiceImpl;
+import com.salimcankaya.service.implementation.LoanServiceImpl;
 
 
 @RestController
@@ -20,10 +25,13 @@ public class CustomerController {
 	
 	private final CustomerServiceImpl customerService;
 	
+	private final LoanServiceImpl loanService;
 	
-	public CustomerController(CustomerServiceImpl customerService) {
+	
+	public CustomerController(CustomerServiceImpl customerService, LoanServiceImpl loanService) {
 		
 		this.customerService = customerService;
+		this.loanService = loanService;
 	}
 	
 	
@@ -54,5 +62,28 @@ public class CustomerController {
 		customerService.deleteCustomerByTckn(tckn);
 		return ResponseEntity.status(HttpStatus.OK).body("Customer successfully deleted...");
 	}
+	
+	@GetMapping("loans")
+	public ResponseEntity<List<Loan>> getLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
+		
+		List<Loan> loanList = loanService.getLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
+		return new ResponseEntity<>(loanList, HttpStatus.OK);
+	}
+	
+	@GetMapping("approved-loans")
+	public ResponseEntity<List<Loan>> getApprovedLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
+		
+		List<Loan> loanList = loanService.getApprovedLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
+		return new ResponseEntity<>(loanList, HttpStatus.OK);
+	}
+	
+	@GetMapping("apply-loan")
+	public ResponseEntity<?> applyLoan(@RequestParam Long tckn) {
+		
+		loanService.applyLoan(tckn);
+		return ResponseEntity.status(HttpStatus.OK).body("Loan applied...");
+	}
+	
+	
 
 }
