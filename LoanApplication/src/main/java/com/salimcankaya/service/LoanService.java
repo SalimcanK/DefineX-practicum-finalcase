@@ -9,7 +9,7 @@ import com.salimcankaya.model.Loan;
 public interface LoanService {
 	
 	
-	List<Loan> getAllLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth);
+	List<Loan> getLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth);
 	
 	List<Loan> getApprovedLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth);
 	

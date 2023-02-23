@@ -23,10 +23,10 @@ public class LoanServiceImpl implements LoanService {
 	
 	private final CustomerService customerService; 
 	
-	private final CreditScoreService creditScoreService;
+	private final CreditScoreServiceImpl creditScoreService;
 	
 	
-	public LoanServiceImpl(LoanRepository loanRepo, CustomerService customerService, CreditScoreService creditScoreService) {
+	public LoanServiceImpl(LoanRepository loanRepo, CustomerService customerService, CreditScoreServiceImpl creditScoreService) {
 		
 		this.loanRepo = loanRepo;
 		this.customerService = customerService;
@@ -35,7 +35,7 @@ public class LoanServiceImpl implements LoanService {
 	
 
 	@Override
-	public List<Loan> getAllLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth) {
+	public List<Loan> getLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth) {
 		
 		if (!customerService.existByTckn(tckn) && !customerService.existByDateOfBirth(dateOfBirth)) {
 			

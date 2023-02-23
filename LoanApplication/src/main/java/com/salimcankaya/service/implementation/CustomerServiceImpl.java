@@ -72,13 +72,18 @@ public class CustomerServiceImpl implements CustomerService {
 			
 			throw new CustomerNotFoundException("Customer with provided tckn" + tckn + "not found! Delete operation is cancelled...");
 		
-		} else {
+		} 
+		
+		if(loanRepo.findLoansByCustomer_Tckn(tckn).isEmpty()) {
 			
 			customerRepo.deleteByTckn(tckn);
+		
+		} else {
+			
 			loanRepo.deleteLoansByCustomer_Tckn(tckn);
-			return true;
 		}
 		
+		return true;
 	}
 
 
