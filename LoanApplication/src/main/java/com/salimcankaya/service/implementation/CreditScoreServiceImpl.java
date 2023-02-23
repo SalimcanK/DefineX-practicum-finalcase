@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CreditScoreService {
+public class CreditScoreServiceImpl {
 	
 	
 	// Credit Score Service is assumed to already exist. This method only simulates a basic placeholder.
