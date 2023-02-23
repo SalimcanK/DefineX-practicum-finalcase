@@ -15,6 +15,6 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 	
 	List<Loan> findLoansByCustomer_Tckn(Long tckn);
 	
-	boolean deleteLoansByCustomer_Tckn(Long tckn);
+	int deleteLoansByCustomer_Tckn(Long tckn);
 
 }

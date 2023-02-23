@@ -16,7 +16,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	
 	Optional<Customer> findByTckn(Long tckn);
 	
-	boolean deleteByTckn(Long tckn);
+	int deleteByTckn(Long tckn);
 	
 	boolean existsByDateOfBirth(LocalDate dateOfBirth);
 }
