@@ -13,6 +13,9 @@ import com.salimcankaya.model.Loan;
 import com.salimcankaya.repository.LoanRepository;
 import com.salimcankaya.service.CustomerService;
 import com.salimcankaya.service.LoanService;
+import com.salimcankaya.sms.SmsProducer;
+
+import static com.salimcankaya.model.dto.CustomerMapper.toSmsDto;
 
 
 @Service
@@ -25,12 +28,15 @@ public class LoanServiceImpl implements LoanService {
 	
 	private final CreditScoreServiceImpl creditScoreService;
 	
+	private final SmsProducer smsProducer;
 	
-	public LoanServiceImpl(LoanRepository loanRepo, CustomerService customerService, CreditScoreServiceImpl creditScoreService) {
+	
+	public LoanServiceImpl(LoanRepository loanRepo, CustomerService customerService, CreditScoreServiceImpl creditScoreService, SmsProducer smsProducer) {
 		
 		this.loanRepo = loanRepo;
 		this.customerService = customerService;
 		this.creditScoreService = creditScoreService;
+		this.smsProducer = smsProducer;
 	}
 	
 
@@ -152,6 +158,8 @@ public class LoanServiceImpl implements LoanService {
 				loan.setApprovalStatus(true);
 				loan.setLoanAmount(loanAmount);
 				loan.setCustomer(customer);
+				
+				smsProducer.messageOnLoanApproval(toSmsDto(customer, LocalDateTime.now(), loanAmount));
 				
 			}
 			
