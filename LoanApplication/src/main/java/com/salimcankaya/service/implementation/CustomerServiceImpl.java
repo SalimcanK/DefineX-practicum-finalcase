@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer getCustomerByTckn(Long tckn) {
 		
 		return customerRepo.findByTckn(tckn)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with provided tckn" + tckn + "not found!"));
+				.orElseThrow(() -> new CustomerNotFoundException("Customer with provided tckn" + tckn + " not found!"));
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		if(!existByTckn(customer.getTckn())) {
 			
-			throw new CustomerNotFoundException("Customer with provided tckn" + customer.getTckn() + "not found! Update operation is cancelled...");
+			throw new CustomerNotFoundException("Customer with provided tckn" + customer.getTckn() + " not found! Update operation is cancelled...");
 		
 		} else {
 			
@@ -70,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		if(!existByTckn(tckn)) {
 			
-			throw new CustomerNotFoundException("Customer with provided tckn" + tckn + "not found! Delete operation is cancelled...");
+			throw new CustomerNotFoundException("Customer with provided tckn" + tckn + " not found! Delete operation is cancelled...");
 		
 		} 
 		

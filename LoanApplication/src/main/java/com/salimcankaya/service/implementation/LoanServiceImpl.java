@@ -45,7 +45,7 @@ public class LoanServiceImpl implements LoanService {
 		
 		if (!customerService.existByTckn(tckn) && !customerService.existByDateOfBirth(dateOfBirth)) {
 			
-			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + "and date of birth: " + dateOfBirth + "not found!");
+			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " and date of birth: " + dateOfBirth + " not found!");
 		
 		} else {
 			
@@ -58,7 +58,7 @@ public class LoanServiceImpl implements LoanService {
 		
         if (!customerService.existByTckn(tckn) && !customerService.existByDateOfBirth(dateOfBirth)) {
 			
-			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + "and date of birth: " + dateOfBirth + "not found!");
+			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " and date of birth: " + dateOfBirth + " not found!");
 		
 		} else {
 			
@@ -135,7 +135,7 @@ public class LoanServiceImpl implements LoanService {
 		
 		if(!customerService.existByTckn(tckn)) {
 			
-			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + "not found!");
+			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " not found!");
 		
 		} else {
 			

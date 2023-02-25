@@ -1,7 +1,9 @@
 package com.salimcankaya.controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,28 +64,32 @@ public class CustomerController {
 	public ResponseEntity<?> deleteCustomer(@RequestParam Long tckn) {
 		
 		customerService.deleteCustomerByTckn(tckn);
-		return ResponseEntity.status(HttpStatus.OK).body("Customer successfully deleted...");
+		Map<String, String> body = new HashMap<>();
+		body.put("message", "Customer successfully deleted...");
+		return new ResponseEntity<>(body, HttpStatus.OK);
 	}
 	
-	@GetMapping("loans")
+	@GetMapping("/loans")
 	public ResponseEntity<List<Loan>> getLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
 		
 		List<Loan> loanList = loanService.getLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
 		return new ResponseEntity<>(loanList, HttpStatus.OK);
 	}
 	
-	@GetMapping("approved-loans")
+	@GetMapping("/approved-loans")
 	public ResponseEntity<List<Loan>> getApprovedLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
 		
 		List<Loan> loanList = loanService.getApprovedLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
 		return new ResponseEntity<>(loanList, HttpStatus.OK);
 	}
 	
-	@GetMapping("apply-loan")
+	@GetMapping("/apply-loan")
 	public ResponseEntity<?> applyLoan(@RequestParam Long tckn) {
 		
 		loanService.applyLoan(tckn);
-		return ResponseEntity.status(HttpStatus.OK).body("Loan applied...");
+		Map<String, String> body = new HashMap<>();
+		body.put("message", "Loan applied...");
+		return new ResponseEntity<>(body, HttpStatus.OK);
 	}
 	
 	
