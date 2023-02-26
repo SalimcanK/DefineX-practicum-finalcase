@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.salimcankaya.exception.CustomerNotFoundException;
@@ -30,6 +32,8 @@ public class LoanServiceImpl implements LoanService {
 	
 	private final SmsProducer smsProducer;
 	
+	private static final Logger logger = LoggerFactory.getLogger(LoanServiceImpl.class);
+	
 	//Constructor injection
 	public LoanServiceImpl(LoanRepository loanRepo, CustomerService customerService, CreditScoreServiceImpl creditScoreService, SmsProducer smsProducer) {
 		
@@ -51,8 +55,10 @@ public class LoanServiceImpl implements LoanService {
 	@Override
 	public List<Loan> getLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth) {
 		
+		logger.trace("Getting loans by TCKN and date of birth...");
 		if (!customerService.existByTckn(tckn) && !customerService.existByDateOfBirth(dateOfBirth)) {
 			
+			logger.error("Customer not found exception at LoanServiceImpl.getLoansByTcknAndDateOfBirth");
 			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " and date of birth: " + dateOfBirth + " not found!");
 		
 		} else {
@@ -72,8 +78,10 @@ public class LoanServiceImpl implements LoanService {
 	@Override
 	public List<Loan> getApprovedLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth) {
 		
+		logger.trace("Getting approved loans by TCKN and date of birth...");
         if (!customerService.existByTckn(tckn) && !customerService.existByDateOfBirth(dateOfBirth)) {
 			
+        	logger.error("Customer not found exception at LoanServiceImpl.getApprovedLoansByTcknAndDateOfBirth");
 			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " and date of birth: " + dateOfBirth + " not found!");
 		
 		} else {
@@ -116,6 +124,7 @@ public class LoanServiceImpl implements LoanService {
 		final Double creditLimitMultiplier = 4D;
 		Double loanAmount = 0D;
 		
+		logger.trace("Calculating loan amount...");
 		if(creditScore < 500) {
 			
 			return loanAmount;
@@ -160,8 +169,10 @@ public class LoanServiceImpl implements LoanService {
 	@Override
 	public boolean applyLoan(Long tckn) {
 		
+		logger.trace("Applying loan...");
 		if(!customerService.existByTckn(tckn)) {
 			
+			logger.error("Customer not found exception at LoanServiceImpl.applyLoan");
 			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " not found!");
 		
 		} else {
@@ -190,6 +201,7 @@ public class LoanServiceImpl implements LoanService {
 				
 			}
 			
+			logger.info("Loan applied");
 			loanRepo.save(loan);
 			return true;
 		}

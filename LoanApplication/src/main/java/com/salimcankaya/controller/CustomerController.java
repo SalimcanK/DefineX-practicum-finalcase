@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +26,7 @@ import com.salimcankaya.service.implementation.CustomerServiceImpl;
 import com.salimcankaya.service.implementation.LoanServiceImpl;
 
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,6 +43,8 @@ public class CustomerController {
 	
 	private final LoanServiceImpl loanService;
 	
+	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+	
 	// Constructor injection
 	public CustomerController(CustomerServiceImpl customerService, LoanServiceImpl loanService) {
 		
@@ -48,6 +53,8 @@ public class CustomerController {
 	}
 	
 	// Redirect to swagger ui
+	@GetMapping("/")
+	@Hidden
     public void redirect(HttpServletResponse response) throws IOException {
 
         response.sendRedirect("/swagger-ui.html");
@@ -59,6 +66,7 @@ public class CustomerController {
 			@ApiResponse(responseCode = "404", description = "Customer not found.")})
 	public ResponseEntity<Customer> getCustomerByTckn(@RequestParam Long tckn) {
 		
+		logger.debug("/customer request received");
 		Customer customer = customerService.getCustomerByTckn(tckn);
 		return new ResponseEntity<>(customer, HttpStatus.OK);
 	}
@@ -69,6 +77,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Bad request. Duplicate TCKN.")})
 	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
 		
+		logger.debug("/add-customer request received");
 		Customer newCustomer = customerService.addCustomer(customer);
 		return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
 	}
@@ -79,6 +88,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found. TCKN does not exist.")})
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
 		
+		logger.debug("/update-customer request received");
 		Customer updatedCustomer = customerService.updateCustomer(customer);
 		return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
 	}
@@ -89,6 +99,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Customer not found. TCKN does not exist.")})
 	public ResponseEntity<?> deleteCustomer(@RequestParam Long tckn) {
 		
+		logger.debug("/delete-customer request received");
 		customerService.deleteCustomerByTckn(tckn);
 		Map<String, String> body = new HashMap<>();
 		body.put("message", "Customer successfully deleted...");
@@ -102,6 +113,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found.")})
 	public ResponseEntity<List<Loan>> getLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
 		
+		logger.debug("/loans request received");
 		List<Loan> loanList = loanService.getLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
 		return new ResponseEntity<>(loanList, HttpStatus.OK);
 	}
@@ -113,6 +125,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found.")})
 	public ResponseEntity<List<Loan>> getApprovedLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
 		
+		logger.debug("/approved-loans request received");
 		List<Loan> loanList = loanService.getApprovedLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
 		return new ResponseEntity<>(loanList, HttpStatus.OK);
 	}
@@ -124,6 +137,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found.")})
 	public ResponseEntity<?> applyLoan(@RequestParam Long tckn) {
 		
+		logger.debug("/apply-loan request received");
 		loanService.applyLoan(tckn);
 		Map<String, String> body = new HashMap<>();
 		body.put("message", "Loan applied...");

@@ -2,6 +2,8 @@ package com.salimcankaya.service.implementation;
 
 import java.time.LocalDate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.salimcankaya.exception.CustomerNotFoundException;
@@ -23,6 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	private final LoanRepository loanRepo;
 	
+	private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
+	
 	//Constructor injection
 	public CustomerServiceImpl(CustomerRepository customerRepo, LoanRepository loanRepo) {
 		
@@ -41,6 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer getCustomerByTckn(Long tckn) {
 		
+		logger.trace("Getting customer by TCKN...");
 		return customerRepo.findByTckn(tckn)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with provided tckn" + tckn + " not found!"));
 	}
@@ -55,12 +60,15 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer addCustomer(Customer customer) {
 		
+		logger.trace("Adding a customer...");
 		if(existByTckn(customer.getTckn())) {
 			
+			logger.error("Duplicate TCKN exception at CustomerServiceImpl.addCustomer");
 			throw new DuplicateTcknException();
 		
 		} else {
 			
+			logger.info("Customer added to database");
 			return customerRepo.save(customer);
 		}
 	}
@@ -75,12 +83,15 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer updateCustomer(Customer customer) {
 		
+		logger.trace("Updating a customer...");
 		if(!existByTckn(customer.getTckn())) {
 			
+			logger.error("Customer not found exception at CustomerServiceImpl.updateCustomer");
 			throw new CustomerNotFoundException("Customer with provided tckn" + customer.getTckn() + " not found! Update operation is cancelled...");
 		
 		} else {
 			
+			logger.info("Customer updated");
 			return customerRepo.save(customer);
 		}
 		
@@ -96,8 +107,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public boolean deleteCustomerByTckn(Long tckn) {
 		
+		logger.trace("Deleting a customer...");
 		if(!existByTckn(tckn)) {
 			
+			logger.error("Customer not found exception at CustomerServiceImpl.deleteCustomerByTckn");
 			throw new CustomerNotFoundException("Customer with provided tckn" + tckn + " not found! Delete operation is cancelled...");
 		
 		} 
@@ -111,6 +124,7 @@ public class CustomerServiceImpl implements CustomerService {
 			loanRepo.deleteLoansByCustomer_Tckn(tckn);
 		}
 		
+		logger.info("Customer deleted");
 		return true;
 	}
 
@@ -123,6 +137,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public boolean existByTckn(Long tckn) {
 		
+		logger.trace("CustomerServiceImpl.existsById");
 		return customerRepo.existsById(tckn);
 	}
 
@@ -135,6 +150,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public boolean existByDateOfBirth(LocalDate dateOfBirth) {
 		
+		logger.trace("CustomerServiceImpl.existsByDateOfBirth");
 		return customerRepo.existsByDateOfBirth(dateOfBirth);
 	}
 
