@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <title>Loan Application</title>
+</head>
+<body>
+
+    <!-- Form -->
+    <div class="container">
+        <form id="form" class="form">
+          <h2>Kredi Başvurusu</h2>
+
+          <div class="form-control">
+            <label for="tckn">TC Kimlik no</label>
+            <input type="number" inputmode="numeric" id="tckn">
+            <small>Error message</small>
+          </div>
+
+          <div class="form-control">
+            <label for="name">Ad</label>
+            <input type="text" id="name">
+            <small>Error message</small>
+          </div>
+    
+          <div class="form-control">
+            <label for="lastname">Soyad</label>
+            <input type="text" id="lastname">
+            <small>Error message</small>
+          </div>
+    
+          <div class="form-control">
+            <label for="dateofbirth">Doğum Tarihi</label>
+            <input type="date" id="dateofbirth">
+            <small>Error message</small>
+          </div>
+    
+          <div class="form-control">
+            <label for="phonenumber">Telefon</label>
+            <input type="number" inputmode="numeric" id="phonenumber">
+            <small>Error message</small>
+          </div>
+
+          <div class="form-control">
+            <label for="monthlysalary">Aylık Gelir (TL)</label>
+            <input type="number" inputmode="numeric" id="monthlysalary">
+            <small>Error message</small>
+          </div>
+
+          <div class="form-control">
+            <label for="deposit">Depozito (Opsiyonel)</label>
+            <input type="number" inputmode="numeric" id="deposit">
+            <small>Error message</small>
+          </div>
+
+          <button class="btn" type="submit">Başvur</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>
