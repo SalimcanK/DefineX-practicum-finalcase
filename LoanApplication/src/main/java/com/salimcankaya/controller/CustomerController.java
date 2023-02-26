@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin(maxAge = 3600)
+@RequestMapping("/")
 public class CustomerController {
 	
 	
@@ -48,28 +50,28 @@ public class CustomerController {
     }
 	
 	
-	@GetMapping("/customer")
+	@GetMapping("customer")
 	public ResponseEntity<Customer> getCustomerByTckn(@RequestParam Long tckn) {
 		
 		Customer customer = customerService.getCustomerByTckn(tckn);
 		return new ResponseEntity<>(customer, HttpStatus.OK);
 	}
 	
-	@PostMapping("/add-customer")
+	@PostMapping("add-customer")
 	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
 		
 		Customer newCustomer = customerService.addCustomer(customer);
 		return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/update-customer")
+	@PutMapping("update-customer")
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
 		
 		Customer updatedCustomer = customerService.updateCustomer(customer);
 		return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/delete-customer")
+	@DeleteMapping("delete-customer")
 	public ResponseEntity<?> deleteCustomer(@RequestParam Long tckn) {
 		
 		customerService.deleteCustomerByTckn(tckn);
@@ -78,21 +80,21 @@ public class CustomerController {
 		return new ResponseEntity<>(body, HttpStatus.OK);
 	}
 	
-	@GetMapping("/loans")
+	@GetMapping("loans")
 	public ResponseEntity<List<Loan>> getLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
 		
 		List<Loan> loanList = loanService.getLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
 		return new ResponseEntity<>(loanList, HttpStatus.OK);
 	}
 	
-	@GetMapping("/approved-loans")
+	@GetMapping("approved-loans")
 	public ResponseEntity<List<Loan>> getApprovedLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
 		
 		List<Loan> loanList = loanService.getApprovedLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
 		return new ResponseEntity<>(loanList, HttpStatus.OK);
 	}
 	
-	@GetMapping("/apply-loan")
+	@GetMapping("apply-loan")
 	public ResponseEntity<?> applyLoan(@RequestParam Long tckn) {
 		
 		loanService.applyLoan(tckn);

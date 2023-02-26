@@ -3,16 +3,17 @@ package com.salimcankaya.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
-import springfox.documentation.builders.ApiInfoBuilder;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @EnableSwagger2
+@OpenAPIDefinition(info = @Info(title = "Loan REST API", version = "1.0.0", description = "Created for Patika DefineX practicum final case"))
 public class SwaggerConfig {
 	
 	 
@@ -21,14 +22,7 @@ public class SwaggerConfig {
 
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class)).paths(PathSelectors.any())
-				.build().apiInfo(apiInfo()).useDefaultResponseMessages(false);
-	}
-
-	@Bean
-	public ApiInfo apiInfo() {
-
-		final ApiInfoBuilder builder = new ApiInfoBuilder();
-		return builder.build();
+				.build();
 	}
 				
 	
