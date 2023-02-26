@@ -23,12 +23,16 @@ import com.salimcankaya.model.Loan;
 import com.salimcankaya.service.implementation.CustomerServiceImpl;
 import com.salimcankaya.service.implementation.LoanServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
 
 
 @RestController
 @CrossOrigin(maxAge = 3600)
 @RequestMapping("/")
+@Api(value = "Customer Controller")
 public class CustomerController {
 	
 	
@@ -36,21 +40,23 @@ public class CustomerController {
 	
 	private final LoanServiceImpl loanService;
 	
-	
+	// Constructor injection
 	public CustomerController(CustomerServiceImpl customerService, LoanServiceImpl loanService) {
 		
 		this.customerService = customerService;
 		this.loanService = loanService;
 	}
 	
-	
+	// Redirect to swagger ui
     public void redirect(HttpServletResponse response) throws IOException {
 
         response.sendRedirect("/swagger-ui.html");
     }
 	
-	
 	@GetMapping("customer")
+	@Operation(summary = "Get customer with the provided TCKN", responses = {
+			@ApiResponse(responseCode = "200", description = "Customer fetched successfully!"),
+			@ApiResponse(responseCode = "404", description = "Customer not found.")})
 	public ResponseEntity<Customer> getCustomerByTckn(@RequestParam Long tckn) {
 		
 		Customer customer = customerService.getCustomerByTckn(tckn);
@@ -58,6 +64,9 @@ public class CustomerController {
 	}
 	
 	@PostMapping("add-customer")
+	@Operation(summary = "Add a customer", responses = {
+            @ApiResponse(responseCode = "201", description = "Customer added successfully!"),
+            @ApiResponse(responseCode = "400", description = "Bad request. Duplicate TCKN.")})
 	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
 		
 		Customer newCustomer = customerService.addCustomer(customer);
@@ -65,6 +74,9 @@ public class CustomerController {
 	}
 	
 	@PutMapping("update-customer")
+	@Operation(summary = "Update an existing customer", responses = {
+            @ApiResponse(responseCode = "200", description = "Customer updated successfully!"),
+            @ApiResponse(responseCode = "404", description = "Customer not found. TCKN does not exist.")})
 	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
 		
 		Customer updatedCustomer = customerService.updateCustomer(customer);
@@ -72,6 +84,9 @@ public class CustomerController {
 	}
 	
 	@DeleteMapping("delete-customer")
+	@Operation(summary = "Delete a customer", responses = {
+            @ApiResponse(responseCode = "200", description = "Customer deleted successfully!"),
+            @ApiResponse(responseCode = "400", description = "Customer not found. TCKN does not exist.")})
 	public ResponseEntity<?> deleteCustomer(@RequestParam Long tckn) {
 		
 		customerService.deleteCustomerByTckn(tckn);
@@ -81,6 +96,10 @@ public class CustomerController {
 	}
 	
 	@GetMapping("loans")
+	@Operation(summary = "Get customer's loan history", responses = {
+            @ApiResponse(responseCode = "200", description = "Loan history fetched successfully!"),
+            @ApiResponse(responseCode = "400", description = "Bad request. TCKN is not valid."),
+            @ApiResponse(responseCode = "404", description = "Customer not found.")})
 	public ResponseEntity<List<Loan>> getLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
 		
 		List<Loan> loanList = loanService.getLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
@@ -88,6 +107,10 @@ public class CustomerController {
 	}
 	
 	@GetMapping("approved-loans")
+	@Operation(summary = "Get customer's approved loans", responses = {
+			@ApiResponse(responseCode = "200", description = "Approved loans fetched successfully!"),
+			@ApiResponse(responseCode = "400", description = "Bad request. TCKN is not valid."),
+            @ApiResponse(responseCode = "404", description = "Customer not found.")})
 	public ResponseEntity<List<Loan>> getApprovedLoans(@RequestParam Long tckn, @RequestParam LocalDate dateOfBirth) {
 		
 		List<Loan> loanList = loanService.getApprovedLoansByTcknAndDateOfBirth(tckn, dateOfBirth);
@@ -95,6 +118,10 @@ public class CustomerController {
 	}
 	
 	@GetMapping("apply-loan")
+	@Operation(summary = "Apply loan to a customer", responses = {
+            @ApiResponse(responseCode = "200", description = "Loan is applied successfully!"),
+            @ApiResponse(responseCode = "400", description = "Bad request. TCKN is not valid."),
+            @ApiResponse(responseCode = "404", description = "Customer not found.")})
 	public ResponseEntity<?> applyLoan(@RequestParam Long tckn) {
 		
 		loanService.applyLoan(tckn);

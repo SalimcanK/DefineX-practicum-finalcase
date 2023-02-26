@@ -20,9 +20,13 @@ public class SmsProducer {
 	}
 
 
+	/**
+	 * Produce SMS when loan is approved
+	 * 
+	 * @param CustomerSmsDto object
+	 */
 	public void messageOnLoanApproval(CustomerSmsDto customerSmsDto) {
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, customerSmsDto);
-        System.out.println("Message Sent");
     }
 
 }

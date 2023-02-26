@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @EnableSwagger2
-@OpenAPIDefinition(info = @Info(title = "Loan REST API", version = "1.0.0", description = "Created for Patika DefineX practicum final case"))
+@OpenAPIDefinition(info = @Info(title = "Loan REST API", version = "1.0.0", description = "Created for Patika DefineX Practicum"))
 public class SwaggerConfig {
 	
 	 

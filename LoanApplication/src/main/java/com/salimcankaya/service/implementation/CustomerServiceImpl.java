@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	private final LoanRepository loanRepo;
 	
-	
+	//Constructor injection
 	public CustomerServiceImpl(CustomerRepository customerRepo, LoanRepository loanRepo) {
 		
 		this.customerRepo = customerRepo;
@@ -31,6 +31,13 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	
+	/**
+	 * Get a specific customer
+	 * 
+	 * @param tckn of a customer
+	 * @return Customer object
+	 * @throws CustomerNotFoundException if the customer does not exist
+	 */
 	@Override
 	public Customer getCustomerByTckn(Long tckn) {
 		
@@ -38,6 +45,13 @@ public class CustomerServiceImpl implements CustomerService {
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with provided tckn" + tckn + " not found!"));
 	}
 
+	/**
+	 * Add a customer
+	 * 
+	 * @param Customer object
+	 * @return Customer object
+	 * @throws DuplicateTcknException if the provided TCKN already exists
+	 */
 	@Override
 	public Customer addCustomer(Customer customer) {
 		
@@ -51,6 +65,13 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
+	/**
+	 * Update an existing customer
+	 * 
+	 * @param Customer object
+	 * @return Customer object
+	 * @throws CustomerNotFoundException if the customer does not exist
+	 */
 	@Override
 	public Customer updateCustomer(Customer customer) {
 		
@@ -65,6 +86,13 @@ public class CustomerServiceImpl implements CustomerService {
 		
 	}
 
+	/**
+	 * Delete a customer
+	 * 
+	 * @param tckn of a customer
+	 * @return boolean true if the operation is successful
+	 * @throws CustomerNotFoundException if the customer does not exist
+	 */
 	@Override
 	public boolean deleteCustomerByTckn(Long tckn) {
 		
@@ -86,14 +114,24 @@ public class CustomerServiceImpl implements CustomerService {
 		return true;
 	}
 
-
+	/**
+	 * Checks if a customer exists with the provided TCKN
+	 * 
+	 * @param tckn of a customer
+	 * @return boolen true if exists false if not
+	 */
 	@Override
 	public boolean existByTckn(Long tckn) {
 		
 		return customerRepo.existsById(tckn);
 	}
 
-
+    /**
+     * Checks if a customer exists with the provided date of birth
+     * 
+     * @param date of birth of a customer
+	 * @return boolen true if exists false if not
+     */
 	@Override
 	public boolean existByDateOfBirth(LocalDate dateOfBirth) {
 		

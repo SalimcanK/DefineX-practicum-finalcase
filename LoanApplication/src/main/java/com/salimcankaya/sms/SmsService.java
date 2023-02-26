@@ -12,6 +12,11 @@ import com.salimcankaya.model.dto.CustomerSmsDto;
 public class SmsService {
 	
 	
+	/**
+	 * Send SMS
+	 * 
+	 * @param customerSmsDto
+	 */
 	@RabbitListener(queues = RabbitMQConfig.QUEUE)
     public void smsService(CustomerSmsDto customerSmsDto) {
         System.out.println("Message sent to phone number: " + customerSmsDto.getPhoneNumber() + "\n");

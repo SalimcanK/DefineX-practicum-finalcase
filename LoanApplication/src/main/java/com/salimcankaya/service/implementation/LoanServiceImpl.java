@@ -30,7 +30,7 @@ public class LoanServiceImpl implements LoanService {
 	
 	private final SmsProducer smsProducer;
 	
-	
+	//Constructor injection
 	public LoanServiceImpl(LoanRepository loanRepo, CustomerService customerService, CreditScoreServiceImpl creditScoreService, SmsProducer smsProducer) {
 		
 		this.loanRepo = loanRepo;
@@ -40,6 +40,14 @@ public class LoanServiceImpl implements LoanService {
 	}
 	
 
+	/**
+	 * Get all loans(approved and not approved) by given customer TCKN and date of birth
+	 * 
+	 * @param tckn of a customer
+	 * @param date of birth of a customer
+	 * @return List of Loan objects
+	 * @throws CustomerNotFoundException if customer TCKN and date of birth does not exists
+	 */
 	@Override
 	public List<Loan> getLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth) {
 		
@@ -53,6 +61,14 @@ public class LoanServiceImpl implements LoanService {
 		}
 	}
 
+	/**
+	 * Get only approved loans by given customer TCKN and date of birth
+	 * 
+	 * @param tckn of a customer
+	 * @param date of birth of a customer
+	 * @return List of Loan objects
+	 * @throws CustomerNotFoundException if customer TCKN and date of birth does not exists
+	 */
 	@Override
 	public List<Loan> getApprovedLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth) {
 		
@@ -69,67 +85,78 @@ public class LoanServiceImpl implements LoanService {
 		}
 	}
 
+	/**
+	 * Calculates the amount of loan
+	 * 
+	 * There are three main conditions concerning credit score:
+	 * 
+	 * (deposit is optional, there are sub conditions for checking deposit)
+	 *   
+	 *   1) lower than 500 = loan denied, 
+	 *   
+	 *   2) between 500 and 1000 = sub condition for monthly salary:
+	 *     
+	 *       salary lower than 5000 TL = loan amount is 10000 TL + deposit%10 (if there is one),
+	 *     
+	 *       salary between 5000 TL and 10000 TL = loan amount is 20000 TL + deposit%20 (if there is one),
+	 *     
+	 *       salary higher than 10000 TL = loan amount is (monthly salary * credit limit multiplier/2) + deposit%25 (if there is one)
+	 *  
+	 *   3) equal or higher than 1000 = loan amount is (monthly salary * credit limit multiplier) + deposit%50 (if there is one)
+	 *   
+	 * @param creditScore calculated by Credit Score Service
+	 * @param monthlySalary of a customer
+	 * @param deposit of a customer, if there is no deposit, its equal to 0
+	 * @return amount of the loan
+	 * 
+	 */
 	@Override
 	public Double loanCalculator(Integer creditScore, Double monthlySalary, Double deposit) {
 		
-		final Double creditScoreMultiplier = 4D;
+		final Double creditLimitMultiplier = 4D;
 		Double loanAmount = 0D;
 		
 		if(creditScore < 500) {
 			
 			return loanAmount;
-		
-		} else if(creditScore >= 500 && creditScore < 1000) {
+			
+		} else if(creditScore >= 1000) {
+			
+			loanAmount = deposit > 0D ? (monthlySalary * creditLimitMultiplier) + (deposit * (50D/100D))
+	                  : monthlySalary * creditLimitMultiplier;
+			
+		} else {
 			
 			if(monthlySalary < 5000) {
 				
-				if(deposit > 0D) {
-					
-					loanAmount = 10000D + (deposit * (10D/100D));
+				loanAmount = deposit > 0D ? 10000D + (deposit * (10D/100D)) : 10000D;
 				
-				} else {
-					
-					loanAmount = 10000D;
-				}
-			
-			} else if(monthlySalary >= 5000 && monthlySalary < 10000) {
-				
-                if(deposit > 0D) {
-					
-					loanAmount = 20000D + (deposit * (20D/100D));
-				
-				} else {
-					
-					loanAmount = 20000D;
-				}
-			
 			} else if(monthlySalary >= 10000) {
 				
-                if(deposit > 0D) {
-					
-					loanAmount = (monthlySalary * (creditScoreMultiplier / 2)) + (deposit * (25D/100D));
+				loanAmount = deposit > 0D ? (monthlySalary * (creditLimitMultiplier / 2)) + (deposit * (25D/100D))
+						                  : monthlySalary * (creditLimitMultiplier / 2);
 				
-				} else {
-					
-					loanAmount = monthlySalary * (creditScoreMultiplier / 2);
-				}
-			}
-		
-		} else if(creditScore >= 1000) {
-			
-			if(deposit > 0D) {
-				
-				loanAmount = (monthlySalary * creditScoreMultiplier) + (deposit * (50D/100D));
-			
 			} else {
 				
-				loanAmount = monthlySalary * creditScoreMultiplier;
+				loanAmount = deposit > 0D ? 20000D + (deposit * (20D/100D)) : 20000D;
 			}
 		}
 		
 		return loanAmount;
 	}
 
+	/**
+	 * Apply a loan to existing customer
+	 * Send SMS if successful
+	 * 
+	 * @param tckn of a customer
+	 * @return boolean true if successful
+	 * @throws CustomerNotFoundException if customer TCKN does not exist
+	 * 
+	 * @see #creditScoreService
+	 * @see #loanCalculator(Integer, Double, Double)
+	 * @see #smsProducer
+	 */
 	@Override
 	public boolean applyLoan(Long tckn) {
 		
