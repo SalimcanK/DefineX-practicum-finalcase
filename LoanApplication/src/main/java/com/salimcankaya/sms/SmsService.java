@@ -25,10 +25,10 @@ public class SmsService {
 	@RabbitListener(queues = RabbitMQConfig.QUEUE)
     public void smsService(CustomerSmsDto customerSmsDto) {
         
-		logger.info("Message sent to phone number: " + customerSmsDto.getPhoneNumber() + "\n");
+		logger.info("Message sent to phone number: " + customerSmsDto.getPhoneNumber());
 		logger.info("Dear " + StringUtils.capitalize(customerSmsDto.getName()) + " " + customerSmsDto.getLastName().toUpperCase() + "," +
-                "\nYour application for a loan is approved at " + customerSmsDto.getApprovalDate() +
-                "\nLoan amount is: " + customerSmsDto.getLoanAmount());
+                "Your application for a loan is approved at " + customerSmsDto.getApprovalDate() + "," +
+                "Loan amount is: " + customerSmsDto.getLoanAmount());
     }
 
 }
