@@ -124,7 +124,7 @@ const paintLoan = async () => {
 
   const resData = await getLoan();
 
-  alert("Your loan amount is: " + resData[0].loanAmount + " TL");
+  alert("Kredi limitiniz: " + resData[0].loanAmount + " TL");
 }
 
 // Event listeners
