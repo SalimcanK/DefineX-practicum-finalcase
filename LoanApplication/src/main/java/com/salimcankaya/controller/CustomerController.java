@@ -1,5 +1,6 @@
 package com.salimcankaya.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,8 @@ import com.salimcankaya.model.Loan;
 import com.salimcankaya.service.implementation.CustomerServiceImpl;
 import com.salimcankaya.service.implementation.LoanServiceImpl;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 
 @RestController
 @CrossOrigin(maxAge = 3600)
@@ -37,6 +40,12 @@ public class CustomerController {
 		this.customerService = customerService;
 		this.loanService = loanService;
 	}
+	
+	
+    public void redirect(HttpServletResponse response) throws IOException {
+
+        response.sendRedirect("/swagger-ui.html");
+    }
 	
 	
 	@GetMapping("/customer")
