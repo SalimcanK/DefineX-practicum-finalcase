@@ -56,7 +56,7 @@ public class LoanServiceImpl implements LoanService {
 	public List<Loan> getLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth) {
 		
 		logger.trace("Getting loans by TCKN and date of birth...");
-		if (!customerService.existByTckn(tckn) && !customerService.existByDateOfBirth(dateOfBirth)) {
+		if (!customerService.existsByTckn(tckn) && !customerService.existsByDateOfBirth(dateOfBirth)) {
 			
 			logger.error("Customer not found exception at LoanServiceImpl.getLoansByTcknAndDateOfBirth");
 			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " and date of birth: " + dateOfBirth + " not found!");
@@ -79,7 +79,7 @@ public class LoanServiceImpl implements LoanService {
 	public List<Loan> getApprovedLoansByTcknAndDateOfBirth(Long tckn, LocalDate dateOfBirth) {
 		
 		logger.trace("Getting approved loans by TCKN and date of birth...");
-        if (!customerService.existByTckn(tckn) && !customerService.existByDateOfBirth(dateOfBirth)) {
+        if (!customerService.existsByTckn(tckn) && !customerService.existsByDateOfBirth(dateOfBirth)) {
 			
         	logger.error("Customer not found exception at LoanServiceImpl.getApprovedLoansByTcknAndDateOfBirth");
 			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " and date of birth: " + dateOfBirth + " not found!");
@@ -170,7 +170,7 @@ public class LoanServiceImpl implements LoanService {
 	public boolean applyLoan(Long tckn) {
 		
 		logger.trace("Applying loan...");
-		if(!customerService.existByTckn(tckn)) {
+		if(!customerService.existsByTckn(tckn)) {
 			
 			logger.error("Customer not found exception at LoanServiceImpl.applyLoan");
 			throw new CustomerNotFoundException("Customer with provided tckn: " + tckn + " not found!");

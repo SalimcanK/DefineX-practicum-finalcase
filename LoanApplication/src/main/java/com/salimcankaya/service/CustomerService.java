@@ -16,8 +16,8 @@ public interface CustomerService {
 	
 	boolean deleteCustomerByTckn(Long tckn);
 	
-	boolean existByTckn(Long tckn);
+	boolean existsByTckn(Long tckn);
 	
-	boolean existByDateOfBirth(LocalDate dateOfBirth);
+	boolean existsByDateOfBirth(LocalDate dateOfBirth);
 
 }

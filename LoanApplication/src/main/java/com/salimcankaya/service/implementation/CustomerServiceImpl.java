@@ -61,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer addCustomer(Customer customer) {
 		
 		logger.trace("Adding a customer...");
-		if(existByTckn(customer.getTckn())) {
+		if(existsByTckn(customer.getTckn())) {
 			
 			logger.error("Duplicate TCKN exception at CustomerServiceImpl.addCustomer");
 			throw new DuplicateTcknException();
@@ -84,7 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer updateCustomer(Customer customer) {
 		
 		logger.trace("Updating a customer...");
-		if(!existByTckn(customer.getTckn())) {
+		if(!existsByTckn(customer.getTckn())) {
 			
 			logger.error("Customer not found exception at CustomerServiceImpl.updateCustomer");
 			throw new CustomerNotFoundException("Customer with provided tckn" + customer.getTckn() + " not found! Update operation is cancelled...");
@@ -108,7 +108,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public boolean deleteCustomerByTckn(Long tckn) {
 		
 		logger.trace("Deleting a customer...");
-		if(!existByTckn(tckn)) {
+		if(!existsByTckn(tckn)) {
 			
 			logger.error("Customer not found exception at CustomerServiceImpl.deleteCustomerByTckn");
 			throw new CustomerNotFoundException("Customer with provided tckn" + tckn + " not found! Delete operation is cancelled...");
@@ -135,7 +135,7 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @return boolen true if exists false if not
 	 */
 	@Override
-	public boolean existByTckn(Long tckn) {
+	public boolean existsByTckn(Long tckn) {
 		
 		logger.trace("CustomerServiceImpl.existsById");
 		return customerRepo.existsById(tckn);
@@ -148,7 +148,7 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @return boolen true if exists false if not
      */
 	@Override
-	public boolean existByDateOfBirth(LocalDate dateOfBirth) {
+	public boolean existsByDateOfBirth(LocalDate dateOfBirth) {
 		
 		logger.trace("CustomerServiceImpl.existsByDateOfBirth");
 		return customerRepo.existsByDateOfBirth(dateOfBirth);
