@@ -55,7 +55,6 @@ public class Customer {
 	private List<Loan> loanList;
 
 	
-	
 	public Customer() {}
 	
 	public Customer(@Digits(fraction = 0, integer = 11) Long tckn, String name, String lastName, LocalDate dateOfBirth,
@@ -72,6 +71,18 @@ public class Customer {
 		this.creditScore = creditScore;
 	}
 
+	public Customer(@Digits(fraction = 0, integer = 11) Long tckn, String name, String lastName, LocalDate dateOfBirth,
+			@Pattern(regexp = "^[0-9]{10}", message = "Phone number needs to be 10 digits and can only contain numbers.") String phoneNumber,
+			double monthlySalary, double deposit) {
+		super();
+		this.tckn = tckn;
+		this.name = name;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.phoneNumber = phoneNumber;
+		this.monthlySalary = monthlySalary;
+		this.deposit = deposit;
+	}
 	
 	
 	public Long getTckn() {
