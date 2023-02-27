@@ -24,6 +24,7 @@ How To Run
 1. Configure database connection, data location and ports in application.properties
 2. Navigate to the project files, and run ```mvn clean install```
 3. Then run ```mvn spring-boot:run```
+4. For frontend, you can launch a development local server through index.html with VS code Live Server extension
 
 - Server runs on localhost:8080 by default
 - Dummy data will be created for PostgreSQL with data.sql
