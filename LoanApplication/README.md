@@ -1,11 +1,9 @@
 About
-===
-
 ---
 
 Spring Boot project developed for DefineX Java Spring Practicum by Patika.dev
 
-This is a backend service for Loan Application. There is also a simple frontend page for loan applications.
+This is a backend service for Loan Application. There is also a simple frontend page for requesting a loan.
 
 
 **Technologies:**
@@ -19,8 +17,6 @@ This is a backend service for Loan Application. There is also a simple frontend 
 
 
 How To Run
-===
-
 ---
 
 **Run:**
@@ -29,5 +25,5 @@ How To Run
 2. Navigate to the project files, and run ```mvn clean install```
 3. Then run ```mvn spring-boot:run```
 
-&nbsp;&nbsp;&nbsp;&nbsp;Server runs on localhost:8080 by default
-&nbsp;&nbsp;&nbsp;&nbsp;Dummy data will be created for PostgreSQL with data.sql
+- Server runs on localhost:8080 by default
+- Dummy data will be created for PostgreSQL with data.sql
