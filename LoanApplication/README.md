@@ -14,6 +14,9 @@ This is a backend service for Loan Application. There is also a simple frontend 
 5. PostgreSQL
 6. RabbitMQ
 7. Swagger
+8. HTML5
+9. CSS3
+10. JavaScript
 
 
 How To Run
